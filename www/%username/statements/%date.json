@@ -1,0 +1,62 @@
+import datetime
+import re
+
+from aspen import Response
+from gittip import db
+from gittip.utils import get_participant
+
+
+# =============== ^L
+
+participant = get_participant(request, restrict=True)
+date = path['date']
+if re.match('^\d\d\d\d-\d\d$', date) is None:
+    raise Response(404)
+start_year, start_month = [int(x) for x in date.split('-')]
+start = datetime.date(year=start_year, month=start_month, day=1)
+
+if start_month == 12:
+    end_year = start_year + 1
+    end_month = 1
+else:
+    end_year = start_year
+    end_month = start_month + 1
+end = datetime.date(year=end_year, month=end_month, day=1)
+
+you_gave = db.fetchall("""
+
+  SELECT timestamp, tippee, amount
+    FROM transfers
+   WHERE tipper = %s
+     AND timestamp >= %s
+     AND timestamp < %s
+ORDER BY timestamp
+
+""", (path['username'], start, end))
+
+you_received = db.fetchall("""
+
+  SELECT timestamp, amount
+    FROM transfers
+   WHERE tippee = %s
+     AND timestamp >= %s
+     AND timestamp < %s
+ORDER BY timestamp
+
+""", (path['username'], start, end))
+
+exchanges = db.fetchall("""
+
+  SELECT timestamp, amount, fee, recorder, note
+    FROM exchanges
+   WHERE participant = %s
+     AND timestamp >= %s
+     AND timestamp < %s
+ORDER BY timestamp
+
+""", (path['username'], start, end))
+
+response.body = { "you_gave": list(you_gave)
+                , "you_received": list(you_received)
+                , "exchanges": list(exchanges)
+                 }
