@@ -1,0 +1,52 @@
+#header {
+    background: white;
+    padding: 10px 0;
+    position: relative;
+
+    td {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    h1 {
+        line-height: 100%;
+    }
+
+    .logo {
+        padding-right: 18px;
+    }
+
+    .motto {
+        border-left: 2px solid $light-gray;
+        font: bold 10px $Helvetica;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        padding-left: 18px;
+        text-align: left;
+    }
+
+    .sign-in, .you-are {
+        padding-top: 18px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        font: normal 13px $Helvetica;
+        text-align: right;
+    }
+
+    .you-are {
+        padding-top: 4px;
+
+        .quick-stats {
+            font: normal 11px/13px $Helvetica;
+
+            a {
+                color: $brown;
+
+                &:hover {
+                    color: $green;
+                }
+            }
+        }
+    }
+}

@@ -9,29 +9,48 @@
 
 // Define some basic things that are used throughout the site.
 
-@import "fonts-colors-mixins";
+@import "mixins/icons";
+@import "mixins/fonts";
+@import "mixins/colors";
+@import "mixins/mixins";
+
 @import "utils";
-@import "buttons-knobs";
 @import "modules";  // bigger than a knob, but used in multiple places
 @import "elements"; // specific HTML elements (body, p, etc.)
+
+
+// Form elements
+
+@import "forms/button";
+@import "forms/input";
+@import "forms/textarea";
+@import "forms/select";
+
 
 @import "lib/dropdown"; // You guessed it... dropdowns.
 
 
 // Page layout styles
 
-@import "layout";
+@import "layout/header";
+@import "layout/hero";
+@import "layout/box";
+@import "layout/page";
+@import "layout/payment-footer";
+@import "layout/footer";
 
 
-// Styles specific to certain pages. 
+// Styles specific to certain pages.
 
-@import "history";
-@import "horn";
-@import "team";
-@import "profile-edit";
+@import "pages/history";
+@import "pages/horn";
+@import "pages/team";
+@import "pages/profile-edit";
+
+
+// Widgets
 
 @import "widgets/sign_in";
-
 @import "widgets/my_tip";
 
 

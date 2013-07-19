@@ -1,0 +1,72 @@
+#page {
+    padding: 20px 0 0;
+    background: white;
+
+    h1 {
+        color: $green;
+        font: normal 35px $Mensch;
+        letter-spacing: -2px;
+        margin: 35px 0 20px 0;
+        text-transform: uppercase;
+    }
+
+    h2 {
+        color: $brown;
+        font: bold 14px $Helvetica;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin: 35px 0 8px;
+    }
+
+    .col {
+        width: auto;
+        margin: 0 auto;
+    }
+
+    .col0 {
+        width: 460px;
+        margin: 0 auto;
+    }
+
+    .col1 {
+        width: 460px;
+        float: left;
+    }
+
+    .col2 {
+        width: 460px;
+        float: right;
+    }
+
+    #leaderboard {
+        overflow: hidden;
+        margin: 0 auto;
+        width: 870px;
+
+        ul {
+            margin: 0 0 20px 0;
+
+            li {
+                display: block;
+                float: left;
+                margin: 0;
+                min-width: 90px;
+                padding: 2px;
+                width: 10%;
+            }
+
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        > * {
+            width: 270px;
+            float: left;
+            margin-right: 30px;
+        }
+
+        > *:last-child {
+            margin-right: 0;
+        }
+    }
+}
