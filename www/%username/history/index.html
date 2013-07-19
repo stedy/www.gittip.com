@@ -170,11 +170,11 @@ locked = False
         <h2>Record an Exchange.</h2>
         <form style="text-align: left;" action="record-an-exchange"
             method="POST">
-            <input name="csrf_token" type="hidden" value="{{ csrf_token }}" />
-            <input name="amount" placeholder="amount" />
-            <input name="fee" placeholder="fee" />
+            <input type="text" name="csrf_token" type="hidden" value="{{ csrf_token }}" />
+            <input type="text" name="amount" placeholder="amount" />
+            <input type="text" name="fee" placeholder="fee" />
             <br />
-            <input name="note" placeholder="note" style="width: 230px" />
+            <input type="text" name="note" placeholder="note" style="width: 230px" />
             <button type="submit">Submit</button>
         </form>
         {% end %}

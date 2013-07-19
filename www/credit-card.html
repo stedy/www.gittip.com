@@ -88,18 +88,18 @@ title = "Credit Card"
 
                 <div class="float card_number">
                     <label for="card_number">Credit Card Number</label>
-                    <input id="card_number" />
+                    <input type="text" id="card_number" />
                 </div>
 
                 <div class="float expiration not-first">
                     <label for="expiration_month">Expiration</label>
-                    <input class="expiration_month" id="expiration_month" placeholder="MM"/>
-                    <input class="expiration_year" id="expiration_year" placeholder="YYYY"/>
+                    <input type="text" class="expiration_month" id="expiration_month" placeholder="MM"/>
+                    <input type="text" class="expiration_year" id="expiration_year" placeholder="YYYY"/>
                 </div>
 
                 <div class="float cvv not-first">
                     <label for="cvv">CVV</label>
-                    <input id="cvv" />
+                    <input type="text" id="cvv" />
                 </div>
 
                 <div class="clear"></div>
@@ -108,31 +108,31 @@ title = "Credit Card"
                 <h2>Optional</h2>
 
                 <label for="name">Full Name on Card</label>
-                <input id="name" value="{{ card['name'] }}" />
+                <input type="text" id="name" value="{{ card['name'] }}" />
 
                 <div class="clear"></div>
 
                 <label for="address_1">Address 1</label>
-                <input id="address_1" value="{{ card['address_1'] }}" />
+                <input type="text" id="address_1" value="{{ card['address_1'] }}" />
 
 
 
                 <label for="address_2">Address 2</label>
-                <input id="address_2" value="{{ card['address_2'] }}" />
+                <input type="text" id="address_2" value="{{ card['address_2'] }}" />
 
                 <label for="city_town">City or Town</label>
-                <input id="city_town" value="{{ card['city_town'] }}" />
+                <input type="text" id="city_town" value="{{ card['city_town'] }}" />
 
 
 
                 <div class="half left">
                     <label for="state">State or Province</label>
-                    <input id="state" value="{{ card['state'] }}" />
+                    <input type="text" id="state" value="{{ card['state'] }}" />
                 </div>
 
                 <div class="half right">
                     <label for="zip">ZIP or Postal Code</label>
-                    <input id="zip" value="{{ card['zip'] }}" />
+                    <input type="text" id="zip" value="{{ card['zip'] }}" />
                 </div>
 
                 <div class="clear"></div>

@@ -4,7 +4,7 @@
     <form class="username">
         <h2>You are
             <span class="view">{{ escape(user.username) }}</span>
-            <input tabindex="100" name="username" value="{{ escape(user.username) }}"/>
+            <input type="text" tabindex="100" name="username" value="{{ escape(user.username) }}"/>
             <button tabindex="101" class="edit">Edit</button>
             <button tabindex="102" class="save" type="submit">Save</button>
             <button tabindex="103" class="cancel" type="cancel">Cancel</button>
@@ -94,7 +94,7 @@
             <input tabindex="403" type="radio" name="goal" id="goal-yes" value="custom"
             {% if user.goal > 0 %} checked="true"{% end %}/>
             <label for="goal-yes"><span class="my">{{ MY }}</span> goal is to
-                receive $</label><input
+                receive $ </label><input type="text"
                 name="goal_custom" id="goal-custom"
             {% if (user.goal is None) or (user.goal <= 0) %}
             {% else %}
