@@ -38,11 +38,15 @@ title = "For Receiving Money"
   it comes from. Use it to keep inspiring people!</p>
 
 
-  <h2></h2>
-
   <p>{% include templates/sign-in-using.html %} to start receiving money every
   week on Gittip.</p>
 
+
+  <h2>Questions?</h2>
+
+  <p>Check the <a href="/about/faq.html">FAQ</a> and the <a
+    href="/about/">About</a> pages, or ask <a
+    href="https://twitter.com/Gittip">@Gittip</a> on Twitter.</p>
 
 </div>
 {% end %}
