@@ -1,0 +1,48 @@
+title = "For Receiving Money"
+[---]
+{% extends "templates/base.html" %}
+
+{% block head %}
+  <style>
+    .box { display: none; }
+    #hero { padding-bottom: 0; }
+    #hero h2.top { padding-bottom: 67px; }
+  </style>
+{% end %}
+
+{% block page %}
+<div class="col0">
+
+  <h2>Get Money Now</h2>
+
+  <p>Use <a href="/">Gittip</a> to receive money every week from people who
+  love you and are inspired by you: friends, family, supporters, users, fans,
+  etc.</p>
+
+
+  <h2>Paid Securely &amp; In Full</h2>
+
+  <p>We deposit your gifts into your bank account every Friday. Givers cover
+  fees, and Gittip doesn't take a cut.</p>
+
+
+  <h2>Gittip is Social</h2>
+
+  <p>Gittip connects to your social networks, and the total amount you receive
+  each week is public on Gittip.</p>
+
+
+  <h2>No Strings Attached</h2>
+
+  <p>Money you receive on Gittip is a free gift, and you won't see exactly
+  where it comes from. Use it to keep inspiring people!</p>
+
+
+  <h2></h2>
+
+  <p>{% include templates/sign-in-using.html %} to start receiving money every
+  week on Gittip.</p>
+
+
+</div>
+{% end %}
