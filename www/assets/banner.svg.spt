@@ -9,16 +9,17 @@ from decimal import Decimal as D
 class Path(object):
 
   segments = None  # set in subclass
+  pad = "               "
 
   def __str__(self):
-    return "\n".join(str(segment) for segment in self.segments)
+    return "\n".join(self.pad + str(s) for s in self.segments).strip()
 
 
 class M(object):
 
   def __init__(self, x, y):
-    self.x = x
-    self.y = y
+    self.x = D(x)
+    self.y = D(y)
 
   def __str__(self):
     return "M {x},{y}".format(**self.__dict__)
@@ -26,30 +27,42 @@ class M(object):
 
 class c(object):
 
-  def __init__(self, c1x, c1y, c2x, c2y, x, y):
-    self.c1x = c1x
-    self.c1y = c1y
-    self.c2x = c2x
-    self.c2y = c2y
-    self.x = x
-    self.y = y
+  def __init__(self, x1, y1, x2, y2, x, y):
+    self.x1 = D(x1)
+    self.y1 = D(y1)
+    self.x2 = D(x2)
+    self.y2 = D(y2)
+    self.x = D(x)
+    self.y = D(y)
 
   def __str__(self):
-    return "c {c1x},{c1y}, {c2x},{c2y}, {x},{y}".format(**self.__dict__)
+    return "c {x1},{y1}, {x2},{y2}, {x},{y}".format(**self.__dict__)
+
+
+class s(object):
+
+  def __init__(self, x2, y2, x, y):
+    self.x2 = D(x2)
+    self.y2 = D(y2)
+    self.x = D(x)
+    self.y = D(y)
+
+  def __str__(self):
+    return "s {x2},{y2}, {x},{y}".format(**self.__dict__)
 
 
 class l(object):
 
   def __init__(self, x, y):
-    self.x = x
-    self.y = y
+    self.x = D(x)
+    self.y = D(y)
 
   def __str__(self):
     return "l {x},{y}".format(**self.__dict__)
 
 
 class z(object):
-
+  x = y = D('0.000')
   def __str__(self):
     return "z"
 
@@ -59,27 +72,31 @@ class z(object):
 
 class Circle(Path):
   def __init__(self, x, y, size):
+    self.x = D(x)
+    self.y = D(y)
     self.segments = \
       [ M(x, y)
-      , c("0","35.072",   "-28.426","63.502", "-63.502","63.502")
-      , c("-35.068","0",  "-63.498","-28.43", "-63.498","-63.502")
-      , c("0","-35.07",   "28.43","-63.498",  "63.498","-63.498")
-      , c("35.07","0",    "63.498","28.426",  "63.502","63.502")
+      , c("0","35.35",  "-28.65","64",  "-64","64")
+      , c("-35.35","0", "-64","-28.65", "-64","-64")
+      , c("0","-35.35", "28.65","-64",  "64","-64")
+      , c("35.35","0",  "64","28.65",   "64","64")
       , z()
        ]
 
 class Heart(Path):
   def __init__(self, x, y, size):
+    self.x = D(x)
+    self.y = D(y)
     self.segments = \
       [ M(x, y)
-      , c("-7.148","-4.711",  "-13.936","-1.144", "-17.491","2.991")
-      , c("-1.327","1.542",   "-3.601","3.359",   "-7.895","3.359")
-      , c("-4.291","0",       "-6.565","-1.817",  "-7.892","-3.359")
-      , c("-3.558","-4.135",  "-10.346","-7.702", "-17.492","-2.991")
-      , c("-8.39","5.531",    "-5.951","15.538",  "-3.506","18.413")
-      , l("28.889","39.115")
-      , l("28.892","-39.115")
-      , c("2.444","-2.874",   "4.887","-12.881",  "-3.505","-18.413")
+      , c("-7.204","-4.746",  "-14.046","-1.15",  "-17.63","3.017")
+      , c("-1.337","1.555",   "-3.629","3.384",   "-7.954","3.384")
+      , s("-6.616","-1.829",  "-7.958","-3.384")
+      , c("-3.583","-4.167",  "-10.425","-7.763", "-17.625","-3.017")
+      , c("-8.458","5.575",   "-6","15.662",      "-3.533","18.559")
+      , l("29.116","39.425")
+      , l("29.117","-39.425")
+      , c("2.463", "-2.897",  "4.925", "-12.984", "-3.533","-18.559")
       , z()
        ]
 
@@ -92,8 +109,8 @@ class HeartCoin(object):
     """Takes x,y of the center of the shape, and a size.
     """
 
-    _x1,_y1 = (D('165.728'), D('169.498'))
-    _x2,_y2 = (D('128.05'), D('145.565'))
+    _x1,_y1 = (D('128'), D('64'))
+    _x2,_y2 = (D('90.025'), D('39.875'))
 
     heart_offset_x = _x2 - _x1
     heart_offset_y = _y2 - _y1
@@ -114,7 +131,7 @@ colors = [ "663300" # brown
 
 
 [---]
-coins= []
+coins = []
 for i in range(100):
   x = D(random.randint(100, 860))
   y = D(random.randint(100, 540))
@@ -122,28 +139,6 @@ for i in range(100):
   color = random.choice(colors)
 
   coins.append(HeartCoin(x, y, size, color))
-
-"""
-_x1,_y1 = (D('165.728'), D('169.498'))
-M{{ x }},{{ y }}
-c       0,35.072 -28.426,63.502 -63.502,63.502
-c -35.068,0      -63.498,-28.43 -63.498,-63.502
-c 0,-35.07        28.43,-63.498  63.498,-63.498
-c 35.07,0         63.498,28.426  63.502,63.502
-z
-
-_x2,_y2 = (D('128.05'), D('145.565'))
-M{{ x }},{{ y }}
-c -7.148,-4.711   -13.936,-1.144    -17.491,2.991
-c -1.327,1.542    -3.601,3.359      -7.895,3.359
-c -4.291,0        -6.565,-1.817     -7.892,-3.359
-c -3.558,-4.135   -10.346,-7.702    -17.492,-2.991
-c -8.39,5.531     -5.951,15.538     -3.506,18.413
-l 28.889,39.115
-l 28.892,-39.115
-c 2.444 -2.874    4.887 -12.881     -3.505,-18.413
-z
-"""
 
 [---]
 <?xml version="1.0" encoding="utf-8"?>
@@ -158,9 +153,10 @@ z
   <g id="heart-coins">
     {% for i, coin in enumerate(coins) %}
     <g id="coin-{{ i }}">
+
       <path id="coin-{{ i }}-circle" fill="#{{ coin.color }}" opacity="0.5"
             d="{{ coin.circle }}"/>
-      <path id="coin-{{ i }}-heart" fill="#FFFFCC" opacity="0.5"
+      <path id="coin-{{ i }}-heart" fill="#FFFFCC" opacity="0.75"
             d="{{ coin.heart }}"/>
     </g>
     {% end %}
