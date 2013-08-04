@@ -1,0 +1,76 @@
+#!/usr/bin/env python
+import random
+from decimal import Decimal as D
+
+_x1,_y1 = (D('165.728'), D('169.498'))
+_x2,_y2 = (D('128.05'), D('145.565'))
+
+heart_offset_x = _x2 - _x1
+heart_offset_y = _y2 - _y1
+
+x,y = D('400'), D('500')
+
+stuff = { 'circle_x': x
+        , 'circle_y': y
+        , 'heart_x': x + heart_offset_x
+        , 'heart_y': y + heart_offset_y
+         }
+
+
+colors = [ "663300" # brown
+         , "339966" # green
+         , "FFCC33" # yellow
+         #, "FFFFCC" # cream
+         , "990066" # purple
+          ]
+
+
+hearts = []
+for i in range(10):
+  x = random.randint(100, 860)
+  y = random.randint(100, 540)
+  hearts.append(( random.choice(colors)
+                , x
+                , y
+                , x + heart_offset_x
+                , y + heart_offset_y
+                 ))
+
+
+[---]
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="960px"
+     height="640px" viewBox="0 0 960 640" enable-background="new 0 0 960 640"
+     xml:space="preserve">
+  <g id="background">
+    <rect id="bg" fill="#FFFFCC" width="960" height="640"/>
+  </g>
+  <g id="heart-coins">
+    {% for i, (color, x, y, heart_x, heart_y) in enumerate(hearts) %}
+    <g id="coin-{{ i }}">
+      <path id="coin-{{ i }}-circle" fill="#{{ color }}"
+            d=" M{{ x }},{{ y }}
+                c       0,35.072 -28.426,63.502 -63.502,63.502
+                c -35.068,0      -63.498,-28.43 -63.498,-63.502
+                c 0,-35.07        28.43,-63.498  63.498,-63.498
+                c 35.07,0         63.498,28.426  63.502,63.502
+                z
+               "/>
+      <path id="coin-{{ i }}-heart" fill="#FFFFCC"
+            d=" M {{ heart_x }},{{ heart_y }}
+                c -7.148,-4.711   -13.936,-1.144    -17.491,2.991
+                c -1.327,1.542    -3.601,3.359      -7.895,3.359
+                c -4.291,0        -6.565,-1.817     -7.892,-3.359
+                c -3.558,-4.135   -10.346,-7.702    -17.492,-2.991
+                c -8.39,5.531     -5.951,15.538     -3.506,18.413
+                l 28.889,39.115
+                l 28.892,-39.115
+                c 2.444 -2.874    4.887 -12.881        -3.505,-18.413
+                z
+               "/>
+    </g>
+    {% end %}
+  </g>
+</svg>
