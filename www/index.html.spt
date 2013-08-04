@@ -71,9 +71,9 @@ receivers = _wrap(db.fetchall("""
     <script>$(document).ready(Gittip.jump.init);</script>
 {% end %}
 {% block heading %}
-    <h2 class="top"><span>Sustainable Crowdfunding</span></h2>
+    <h2 class="top">Give money every week</h2>
     <h1>
-        <span>Inspiring Generosity</span>
+        <span>To People and Teams That Inspire You</span>
     </h1>
     <h2 class="bottom">
         <span class="button-container">

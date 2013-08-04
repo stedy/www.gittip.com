@@ -27,13 +27,13 @@ class M(object):
 
 class c(object):
 
-  def __init__(self, x1, y1, x2, y2, x, y):
-    self.x1 = D(x1)
-    self.y1 = D(y1)
-    self.x2 = D(x2)
-    self.y2 = D(y2)
-    self.x = D(x)
-    self.y = D(y)
+  def __init__(self, x1, y1, x2, y2, x, y, scale):
+    self.x1 = D(x1) * scale
+    self.y1 = D(y1) * scale
+    self.x2 = D(x2) * scale
+    self.y2 = D(y2) * scale
+    self.x = D(x) * scale
+    self.y = D(y) * scale
 
   def __str__(self):
     return "c {x1},{y1}, {x2},{y2}, {x},{y}".format(**self.__dict__)
@@ -41,11 +41,11 @@ class c(object):
 
 class s(object):
 
-  def __init__(self, x2, y2, x, y):
-    self.x2 = D(x2)
-    self.y2 = D(y2)
-    self.x = D(x)
-    self.y = D(y)
+  def __init__(self, x2, y2, x, y, scale):
+    self.x2 = D(x2) * scale
+    self.y2 = D(y2) * scale
+    self.x = D(x) * scale
+    self.y = D(y) * scale
 
   def __str__(self):
     return "s {x2},{y2}, {x},{y}".format(**self.__dict__)
@@ -53,9 +53,9 @@ class s(object):
 
 class l(object):
 
-  def __init__(self, x, y):
-    self.x = D(x)
-    self.y = D(y)
+  def __init__(self, x, y, scale):
+    self.x = D(x) * scale
+    self.y = D(y) * scale
 
   def __str__(self):
     return "l {x},{y}".format(**self.__dict__)
@@ -71,32 +71,32 @@ class z(object):
 # ================
 
 class Circle(Path):
-  def __init__(self, x, y, size):
+  def __init__(self, x, y, scale):
     self.x = D(x)
     self.y = D(y)
     self.segments = \
       [ M(x, y)
-      , c("0","35.35",  "-28.65","64",  "-64","64")
-      , c("-35.35","0", "-64","-28.65", "-64","-64")
-      , c("0","-35.35", "28.65","-64",  "64","-64")
-      , c("35.35","0",  "64","28.65",   "64","64")
+      , c("0","35.35",  "-28.65","64",  "-64","64", scale)
+      , c("-35.35","0", "-64","-28.65", "-64","-64", scale)
+      , c("0","-35.35", "28.65","-64",  "64","-64", scale)
+      , c("35.35","0",  "64","28.65",   "64","64", scale)
       , z()
        ]
 
 class Heart(Path):
-  def __init__(self, x, y, size):
+  def __init__(self, x, y, scale):
     self.x = D(x)
     self.y = D(y)
     self.segments = \
       [ M(x, y)
-      , c("-7.204","-4.746",  "-14.046","-1.15",  "-17.63","3.017")
-      , c("-1.337","1.555",   "-3.629","3.384",   "-7.954","3.384")
-      , s("-6.616","-1.829",  "-7.958","-3.384")
-      , c("-3.583","-4.167",  "-10.425","-7.763", "-17.625","-3.017")
-      , c("-8.458","5.575",   "-6","15.662",      "-3.533","18.559")
-      , l("29.116","39.425")
-      , l("29.117","-39.425")
-      , c("2.463", "-2.897",  "4.925", "-12.984", "-3.533","-18.559")
+      , c("-7.204","-4.746",  "-14.046","-1.15",  "-17.63","3.017", scale)
+      , c("-1.337","1.555",   "-3.629","3.384",   "-7.954","3.384", scale)
+      , s("-6.616","-1.829",  "-7.958","-3.384", scale)
+      , c("-3.583","-4.167",  "-10.425","-7.763", "-17.625","-3.017", scale)
+      , c("-8.458","5.575",   "-6","15.662",      "-3.533","18.559", scale)
+      , l("29.116","39.425", scale)
+      , l("29.117","-39.425", scale)
+      , c("2.463", "-2.897",  "4.925", "-12.984", "-3.533","-18.559", scale)
       , z()
        ]
 
@@ -105,40 +105,51 @@ class Heart(Path):
 # ==============
 
 class HeartCoin(object):
-  def __init__(self, x, y, size, color):
+  def __init__(self, x, y, size, color, opacity):
     """Takes x,y of the center of the shape, and a size.
     """
 
-    _x1,_y1 = (D('128'), D('64'))
-    _x2,_y2 = (D('90.025'), D('39.875'))
-
-    heart_offset_x = _x2 - _x1
-    heart_offset_y = _y2 - _y1
-
-    size = None
-
+    self.size = D(size)
     self.color = color
-    self.circle = Circle(x, y, size)
-    self.heart = Heart(x + heart_offset_x, y + heart_offset_y, size)
+    self.opacity = opacity
+
+    scale = self.size / D('128')
+
+    heart_offset_x = (D('90.025') - D('128')) * scale
+    heart_offset_y = (D('39.875') - D('64')) * scale
+
+    self.circle = Circle(x, y, scale)
+    self.heart = Heart(x + heart_offset_x, y + heart_offset_y, scale)
 
 
-colors = [ "663300" # brown
-         , "339966" # green
-         , "FFCC33" # yellow
-         #, "FFFFCC" # cream
-         , "990066" # purple
-          ]
-
+BROWN = "663300"
+GREEN = "339966"
+YELLOW = "FFCC33"
+CREAM = "FFFFCC"
+PURPLE = "990066"
 
 [---]
-coins = []
-for i in range(100):
-  x = D(random.randint(100, 860))
-  y = D(random.randint(100, 540))
-  size = D(random.randint(10, 256))
-  color = random.choice(colors)
 
-  coins.append(HeartCoin(x, y, size, color))
+color = CREAM
+color = YELLOW
+color = PURPLE
+color = GREEN
+color = BROWN
+
+coins = []
+nrows = 15
+ncols = 30
+for i in range(nrows):
+  for j in range(ncols):
+    even = j % 2 == 0
+    size = D(48)
+    offset = D(24) if even else 0
+    coins.append(HeartCoin( j*(size*D(0.875))
+                          , i*size+offset
+                          , size
+                          , color
+                          , opacity=1
+                           ))
 
 [---]
 <?xml version="1.0" encoding="utf-8"?>
@@ -148,15 +159,20 @@ for i in range(100):
      height="640px" viewBox="0 0 960 640" enable-background="new 0 0 960 640"
      xml:space="preserve">
   <g id="background">
-    <rect id="bg" fill="#FFFFCC" width="960" height="640"/>
+    <rect id="bg" fill="#{{ CREAM }}" width="960" height="640"/>
+  </g>
+  <g id="background">
+    <rect id="bg" fill="#{{ color }}" width="960" height="640" opacity="0.8"/>
   </g>
   <g id="heart-coins">
     {% for i, coin in enumerate(coins) %}
     <g id="coin-{{ i }}">
 
-      <path id="coin-{{ i }}-circle" fill="#{{ coin.color }}" opacity="0.5"
+      <path id="coin-{{ i }}-circle"
+            fill="#{{ coin.color }}" opacity="{{ coin.opacity }}"
             d="{{ coin.circle }}"/>
-      <path id="coin-{{ i }}-heart" fill="#FFFFCC" opacity="0.75"
+      <path id="coin-{{ i }}-heart"
+            fill="#FFFFCC" opacity="{{ coin.opacity * 0.2 }}"
             d="{{ coin.heart }}"/>
     </g>
     {% end %}
