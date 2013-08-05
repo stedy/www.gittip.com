@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import math
 import random
 from decimal import Decimal as D
 
@@ -105,21 +106,25 @@ class Heart(Path):
 # ==============
 
 class HeartCoin(object):
-  def __init__(self, x, y, size, color, opacity):
+  def __init__(self, x, y, size, color, opacity, rotation):
     """Takes x,y of the center of the shape, and a size.
     """
+    x,y = D(x), D(y)
 
     self.size = D(size)
     self.color = color
     self.opacity = opacity
+    self.rotation = "{} {} {}".format(rotation, x, y)
 
     scale = self.size / D('128')
 
-    heart_offset_x = (D('90.025') - D('128')) * scale
-    heart_offset_y = (D('39.875') - D('64')) * scale
+    circle_x = x + (D('64') * scale)
+    circle_y = y
+    heart_x = circle_x + ((D('90.025') - D('128')) * scale)
+    heart_y = circle_y + ((D('39.875') - D('64')) * scale)
 
-    self.circle = Circle(x, y, scale)
-    self.heart = Heart(x + heart_offset_x, y + heart_offset_y, scale)
+    self.circle = Circle(circle_x, circle_y, scale)
+    self.heart = Heart(heart_x, heart_y, scale)
 
 
 BROWN = "663300"
@@ -137,19 +142,57 @@ color = GREEN
 color = BROWN
 
 coins = []
-nrows = 15
-ncols = 30
-for i in range(nrows):
-  for j in range(ncols):
-    even = j % 2 == 0
-    size = D(48)
-    offset = D(24) if even else 0
-    coins.append(HeartCoin( j*(size*D(0.875))
-                          , i*size+offset
-                          , size
-                          , color
-                          , opacity=1
-                           ))
+size = D(36)
+placed = []
+
+def get_size(x,y):
+  if not placed:
+    return random.randint(24,64)
+
+  padding = 6
+  min_radius = 6
+  nearest = None
+
+  # find the distance to the coin nearest to us
+  for x_,y_,diameter in placed:
+    distance = D(math.sqrt((x-x_)**2 + (y-y_)**2))
+    radius = diameter / D(2)
+    available = distance - radius - padding
+    if available < min_radius:
+      return None
+    nearest = available if available < nearest or nearest is None else nearest
+
+  return min(D(128), nearest * D(2))
+
+
+while len(placed) < 50:
+  x = D(random.randint(0, 960))
+  y = D(random.randint(0, 640))
+
+
+  # are we inside the top line?
+  bound = (D(1.3)*x) - 200
+  if y < bound:
+    continue
+
+  # find the distance to the lower bound
+
+  bound = (D(10)*x) - 1000
+  if y > bound:
+    continue
+
+
+  size = get_size(x,y)
+  if size is None:
+    continue
+
+  print len(placed) + 1, x, bound
+  opacity = 1
+  rotation = random.randint(0,360)
+
+  placed.append((x,y,size))
+
+  coins.append(HeartCoin(x, y, size, color, opacity, rotation))
 
 [---]
 <?xml version="1.0" encoding="utf-8"?>
@@ -161,18 +204,16 @@ for i in range(nrows):
   <g id="background">
     <rect id="bg" fill="#{{ CREAM }}" width="960" height="640"/>
   </g>
-  <g id="background">
-    <rect id="bg" fill="#{{ color }}" width="960" height="640" opacity="0.8"/>
-  </g>
   <g id="heart-coins">
     {% for i, coin in enumerate(coins) %}
-    <g id="coin-{{ i }}">
+    <g id="coin-{{ i }}"
+       transform="rotate({{ coin.rotation }})">
 
       <path id="coin-{{ i }}-circle"
             fill="#{{ coin.color }}" opacity="{{ coin.opacity }}"
             d="{{ coin.circle }}"/>
       <path id="coin-{{ i }}-heart"
-            fill="#FFFFCC" opacity="{{ coin.opacity * 0.2 }}"
+            fill="#FFFFCC"
             d="{{ coin.heart }}"/>
     </g>
     {% end %}
