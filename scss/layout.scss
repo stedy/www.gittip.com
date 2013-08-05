@@ -44,8 +44,8 @@
 }
 
 #hero {
-    background: transparent url('heart-coins.brown.png') top left repeat;
-    border: 1px solid $cream;
+    background: $cream url('banner.png') top left no-repeat;
+    border: 1px solid $brown;
     border-style: solid none;
     padding-bottom: 100px;
     text-align: center;
@@ -53,21 +53,15 @@
     z-index: 1;
 
     .main-padding {
-        color: $cream;
+        color: $brown;
     }
 
     p {
         padding: 0 20%;
     }
-    h2.top {
-        letter-spacing: -2px;
-        font: normal 35px $Mensch;
-        padding: 50px 0 35px 0;
-    }
     h1 {
-        letter-spacing: -3px;
-        font: normal 64px/64px $Mensch;
-        padding-bottom: 20px;
+        font: italic 36pt/48pt Krete;
+        padding: 50px 0 35px 0;
     }
     h2.bottom {
         padding-bottom: 20px;
