@@ -72,7 +72,12 @@ receivers = _wrap(db.fetchall("""
 {% end %}
 {% block heading %}
   <h2>Give money every week to<br>
-  inspiring people &amp; teams.</h2>
+    inspiring people.</h2>
+  <div id="help-you-with">
+    Learn about:
+    <button>Giving</button>
+    <button>Receiving</button>
+  </div>
 {% end %}
 {% block page %}
 
