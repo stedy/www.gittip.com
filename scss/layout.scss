@@ -7,20 +7,6 @@
         text-align: center;
         vertical-align: middle;
     }
-    h1 {
-        line-height: 100%;
-    }
-    .logo {
-        padding-right: 18px;
-    }
-    .motto {
-        border-left: 2px solid $light-gray;
-        font: bold 10px $Helvetica;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        padding-left: 18px;
-        text-align: left;
-    }
     .sign-in, .you-are {
         padding-top: 18px;
         position: absolute;
@@ -47,8 +33,8 @@
     background: $cream url('banner.png') top left no-repeat;
     border: 1px solid $brown;
     border-style: solid none;
-    padding-bottom: 100px;
-    text-align: center;
+    text-align: left;
+    padding-left: 500px;
     position: relative;
     z-index: 1;
 
@@ -59,20 +45,9 @@
     p {
         padding: 0 20%;
     }
-    h1 {
+    h2 {
         font: italic 36pt/48pt Krete;
-        padding: 50px 0 35px 0;
-    }
-    h2.bottom {
-        padding-bottom: 20px;
-        span.button-container {
-            display: inline-block;
-            padding: 0 10px;
-
-            button {
-                font-size: 14px;
-            }
-        }
+        padding: 64pt 0;
     }
 }
 .box {

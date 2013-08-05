@@ -165,25 +165,48 @@ def get_size(x,y):
   return min(D(128), nearest * D(2))
 
 
-while len(placed) < 50:
-  x = D(random.randint(0, 960))
-  y = D(random.randint(0, 640))
+i = 0
+j = 0
+while i < 54:
+
+  if i < 50:
+    color = BROWN
+
+    # Start out with random placement.
+
+    x = D(random.randint(0, 960))
+    y = D(random.randint(0, 640))
+
+  else:
+    color = "FF0000"
+
+    # Once the banner is mostly filled in, methodically fill the remaining
+    # space.
+
+    _ = D(j * 6)
+    row = _ % D(960)
+    col = j
+    x = col * 6
+    y = row * 6
+    j += 1
+    print "trying ", x, y
 
 
   # are we inside the top line?
   bound = (D(1.3)*x) - 200
   if y < bound:
+    print "too high"
     continue
 
   # find the distance to the lower bound
-
   bound = (D(10)*x) - 1000
   if y > bound:
+    print "too low"
     continue
-
 
   size = get_size(x,y)
   if size is None:
+    print "no room"
     continue
 
   print len(placed) + 1, x, bound
@@ -191,6 +214,7 @@ while len(placed) < 50:
   rotation = random.randint(0,360)
 
   placed.append((x,y,size))
+  i += 1
 
   coins.append(HeartCoin(x, y, size, color, opacity, rotation))
 

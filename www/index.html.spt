@@ -71,28 +71,8 @@ receivers = _wrap(db.fetchall("""
     <script>$(document).ready(Gittip.jump.init);</script>
 {% end %}
 {% block heading %}
-  <h1>Give money every week to<br>
-  inspiring people &amp; teams.</h1>
-{% end %}
-{% block box %}
-    <div class="as-content">
-        <h1>Who inspires you?</h1>
-        <form id="jump">
-            <span class="luxury">Enter a</span> <select>
-                <option value="twitter">Twitter</option>
-                <option value="github">GitHub</option>
-                <option value="bitbucket">Bitbucket</option>
-            </select> username:
-            <span class="nowrap">
-                <input placeholder="" />
-                <button type="submit">Go</button>
-            </span>
-        </form>
-    </div>
-
-    <div class="nav level-1">Or browse <a
-            href="/for/">communities on Gittip ...</a></div>
-
+  <h2>Give money every week to<br>
+  inspiring people &amp; teams.</h2>
 {% end %}
 {% block page %}
 
