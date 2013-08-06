@@ -53,19 +53,27 @@
             <a href="/">
                 <img src="/assets/{{ __version__}}/logo.png" alt="Gittip" />
             </a>
-        </h1>
-        {% if user.ANON %}
-          {% include sign-in-using.html %}
-        {% else %}
-        <div class="you-are">
-            <a href="/{{ user.username }}/">{{ user.username }}</a> &ndash;
-            <a id="sign-out" href="/sign-out.html">sign out</a>
-            <div class="quick-stats">
-              Giving: <a href="/{{ user.username }}/giving/">${{ user.get_dollars_giving() }}/wk</a><br />
-              Receiving: <b>${{ user.get_dollars_receiving() }}/wk</b>
+          </h1>
+        <div id="top-nav">
+            <a href="/">Home</a>
+            <a href="/about/">About</a>
+            <a href="/communities/">Communities</a>
+            <input placeholder="Who inspires you?" />
+            <button>Search</button>
+
+            {% if user.ANON %}
+              {% include sign-in-using.html %}
+            {% else %}
+            <div class="you-are">
+                <a href="/{{ user.username }}/">{{ user.username }}</a> &ndash;
+                <a id="sign-out" href="/sign-out.html">sign out</a>
+                <div class="quick-stats">
+                  Giving: <a href="/{{ user.username }}/giving/">${{ user.get_dollars_giving() }}/wk</a><br />
+                  Receiving: <b>${{ user.get_dollars_receiving() }}/wk</b>
+                </div>
             </div>
+            {% end %}
         </div>
-        {% end %}
     </div></div>
 
     <div id="hero">
